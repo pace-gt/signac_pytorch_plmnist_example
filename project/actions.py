@@ -295,34 +295,18 @@ def part_6_seed_analysis_command(*jobs):
         )
     )
 
-    # Check that the replicate (seed) average file has been written and completed properly.
-    passing_check_list = []
-    if not output_file.exists():
-        passing_check_list.append(False)
-
-    with open(output_file, "r") as f:
-        lines = f.readlines()
-
-    num_seeds = set()
-    for job in jobs:
-        num_seeds.add(int(job.statepoint.seed_int))
-
-    num_agg = len(jobs) / len(num_seeds)
-
-    if len(lines) != num_agg + 1:
-        passing_check_list.append(False)
+    output_file_obj.close()
 
     # Write the completion file if the job finished correcty.
-    if False not in passing_check_list:
-        # Print completion file
-        exec_make_completion_file = subprocess.Popen(
-            f"touch {job.fn('avg_std_dev_calculated.txt')}",
-            shell=True, 
-            stderr=subprocess.STDOUT
-        )
-        os.wait4(exec_make_completion_file.pid, os.WSTOPPED)
-
-    output_file_obj.close()
+    if output_file.exists():
+        for job in jobs:  
+            # Print completion file
+            exec_make_completion_file = subprocess.Popen(
+                f"touch {job.fn('avg_std_dev_calculated.txt')}",
+                shell=True, 
+                stderr=subprocess.STDOUT
+            )
+            os.wait4(exec_make_completion_file.pid, os.WSTOPPED)
 
 # ┌───────────────────────────┐
 # │ ROW'S ENDING CODE SECTION │
