@@ -96,7 +96,7 @@ The `clusters.toml` file is used to specify the the HPC environment.  The specif
 The following files are located here:
 
 ```bash
-cd <you_local_path>/signac_pytorch_plmnist_example/signac_pytorch_plmnist_example/project
+cd <you_local_path>/signac_pytorch_plmnist_example/project
 ```
 
 ### **Modify and add the `clusters.toml` file:**
